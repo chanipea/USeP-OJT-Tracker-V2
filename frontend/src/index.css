@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   Custom styles that extend Tailwind's utility classes.
+   Brand colors (kept identical to the original design):
+     #1a0107  - near-black maroon (text / dark surfaces)
+     #7a0016  - primary maroon accent
+     #fdb813  - gold accent
+     #f8f6f5  - light neutral background
+     #f0ebe1  - light border color
+   ========================================================= */
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background-color: #faf9f8;
+}
+
+.hide-scrollbar::-webkit-scrollbar { display: none; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
