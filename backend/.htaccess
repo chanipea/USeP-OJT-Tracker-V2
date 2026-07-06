@@ -1,0 +1,8 @@
+# Some PHP/Apache setups strip the Authorization header before PHP
+# ever sees it. This makes sure it always gets through so token-based
+# login works reliably.
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP:Authorization} ^(.*)
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%1]
+</IfModule>
