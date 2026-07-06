@@ -95,7 +95,7 @@ Place the project inside XAMPP's `htdocs` folder.
 Example:
 
 ```
-C:\xampp\htdocs\usep-ojt-tracker-react
+C:\xampp\htdocs\usep-ojt-tracker-react_v2
 ```
 
 ---
@@ -130,7 +130,7 @@ frontend/.env
 Set the API URL.
 
 ```env
-VITE_API_BASE_URL=http://localhost/usep-ojt-tracker-react/backend/api
+VITE_API_BASE_URL=http://localhost/usep-ojt-tracker-react_v2/backend/api
 ```
 
 ---
@@ -266,7 +266,7 @@ Copy the contents of `dist` into the project's Apache directory alongside the ba
 Example:
 
 ```
-htdocs/usep-ojt-tracker-react/
+htdocs/usep-ojt-tracker-react_v2/
 ```
 
 The application can then be accessed directly through Apache without running the Vite development server.
