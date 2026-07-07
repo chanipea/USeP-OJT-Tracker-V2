@@ -1,7 +1,7 @@
 # USeP OJT Hours Tracker
 
 A full-stack **On-the-Job Training (OJT) Hours Tracker** developed using **React + TypeScript**, **PHP**, and **MySQL**. The system enables students to record and monitor their completed OJT hours, manage their profile, and securely store all data in a MySQL database through a PHP backend.
-
+\
 ---
 
 # Tech Stack
