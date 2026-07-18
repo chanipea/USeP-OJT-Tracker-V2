@@ -193,7 +193,7 @@ export default function Dashboard({ profile, logs }: Props) {
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-2 shadow-inner overflow-hidden">
                   <div
-                    className="bg-[#7a0016] dark:bg-zinc-400 h-full rounded-full transition-all duration-1000 ease-out relative"
+                    className="bg-[#7a0016] h-full rounded-full transition-all duration-1000 ease-out relative"
                     style={{ width: `${progressPercentage}%` }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-shimmer"></div>
