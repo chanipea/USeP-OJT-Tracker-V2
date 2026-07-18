@@ -6,15 +6,13 @@
 // mobile widths.
 // =========================================================
 
-import { Sparkles, Plus, LayoutDashboard, List, User as UserIcon, LogOut } from 'lucide-react';
-import type { TabId, User } from '../types';
+import { Sparkles, Plus, LayoutDashboard, List, User as UserIcon } from 'lucide-react';
+import type { TabId } from '../types';
 
 interface Props {
   activeTab: TabId;
   onTabChange: (tab: TabId) => void;
   onLogHoursClick: () => void;
-  user: User;
-  onLogout: () => void;
 }
 
 const TABS: { id: TabId; label: string; Icon: typeof LayoutDashboard }[] = [
@@ -23,7 +21,7 @@ const TABS: { id: TabId; label: string; Icon: typeof LayoutDashboard }[] = [
   { id: 'profile', label: 'Profile', Icon: UserIcon },
 ];
 
-export default function TopNav({ activeTab, onTabChange, onLogHoursClick, user, onLogout }: Props) {
+export default function TopNav({ activeTab, onTabChange, onLogHoursClick }: Props) {
   return (
     <nav className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-4xl bg-white/70 backdrop-blur-2xl rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex items-center justify-between p-1.5 sm:p-2 z-50 border border-white/80">
       <div
@@ -63,13 +61,6 @@ export default function TopNav({ activeTab, onTabChange, onLogHoursClick, user, 
           className="bg-[#fdb813] text-[#2a020b] px-3 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold hover:bg-[#e5a610] transition-colors shadow-sm flex items-center gap-2 whitespace-nowrap"
         >
           <Plus size={16} className="shrink-0" /> <span className="hidden md:inline">Log Hours</span>
-        </button>
-        <button
-          onClick={onLogout}
-          title={`Log out (${user.email})`}
-          className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-[#1a0107] flex items-center justify-center transition-colors shrink-0"
-        >
-          <LogOut size={15} />
         </button>
       </div>
     </nav>
