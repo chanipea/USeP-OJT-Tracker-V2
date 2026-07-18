@@ -24,6 +24,7 @@ export interface LogEntry {
   diary: string;
   moods: MoodId[];
   categories: CategoryId[];
+  attachments?: string[];
   createdAt?: string;
 }
 
@@ -41,6 +42,8 @@ export interface Profile {
   phone: string;
   profilePicture: string;
   coverPhoto: string;
+  theme?: string;
+  remindersEnabled?: boolean;
 }
 
 export interface NotificationState {

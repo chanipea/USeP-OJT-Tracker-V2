@@ -37,10 +37,43 @@ db.exec(`
     date TEXT NOT NULL,
     start_time TEXT NOT NULL,
     end_time TEXT NOT NULL,
-    task_description TEXT NOT NULL,
+    task_description TEXT,
+    tasks TEXT,
+    diary TEXT,
+    moods TEXT,
+    categories TEXT,
     hours REAL NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
   );
 `);
+
+// Run migrations to add new columns if they don't exist
+try {
+  db.exec("ALTER TABLE logs ADD COLUMN tasks TEXT");
+} catch (e) {}
+try {
+  db.exec("ALTER TABLE logs ADD COLUMN diary TEXT");
+} catch (e) {}
+try {
+  db.exec("ALTER TABLE logs ADD COLUMN moods TEXT");
+} catch (e) {}
+try {
+  db.exec("ALTER TABLE logs ADD COLUMN categories TEXT");
+} catch (e) {}
+try {
+  db.exec("ALTER TABLE logs ADD COLUMN attachments TEXT");
+} catch (e) {}
+try {
+  db.exec("ALTER TABLE profile ADD COLUMN theme TEXT");
+} catch (e) {}
+try {
+  db.exec("ALTER TABLE profile ADD COLUMN reminders_enabled INTEGER DEFAULT 0");
+} catch (e) {}
+
+// Populate tasks from task_description if empty
+try {
+  db.prepare("UPDATE logs SET tasks = task_description WHERE tasks IS NULL OR tasks = ''").run();
+} catch (e) {}
+
 
 module.exports = db;

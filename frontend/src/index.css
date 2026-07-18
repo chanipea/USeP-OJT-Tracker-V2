@@ -26,3 +26,62 @@ body {
 .animate-shimmer {
   animation: shimmer 2s infinite;
 }
+
+html.dark {
+  color-scheme: dark;
+}
+
+.dark .flatpickr-calendar {
+  background: #18181b !important;
+  border-color: #27272a !important;
+}
+.dark .flatpickr-calendar.arrowTop:after {
+  border-bottom-color: #18181b !important;
+}
+.dark .flatpickr-calendar.arrowTop:before {
+  border-bottom-color: #27272a !important;
+}
+.dark .flatpickr-day {
+  color: #fff !important;
+}
+.dark .flatpickr-day.selected {
+  background: #fff !important;
+  color: #1a0107 !important;
+  border-color: #fff !important;
+}
+.dark .flatpickr-day:hover, .dark .flatpickr-day:focus {
+  background: #27272a !important;
+  border-color: #27272a !important;
+}
+.dark .flatpickr-month {
+  color: #fff !important;
+  fill: #fff !important;
+}
+.dark .flatpickr-current-month .flatpickr-monthDropdown-months {
+  background: #18181b !important;
+}
+.dark .flatpickr-weekday {
+  color: #a1a1aa !important;
+}
+.dark .flatpickr-time input,
+.dark .flatpickr-time .flatpickr-time-separator,
+.dark .flatpickr-time .flatpickr-am-pm {
+  color: #fff !important;
+}
+.dark .flatpickr-time input:hover,
+.dark .flatpickr-time .flatpickr-am-pm:hover {
+  background: #27272a !important;
+}
+.dark .flatpickr-time {
+  background: #18181b !important;
+  border-top-color: #27272a !important;
+}
+.dark .flatpickr-time .numInputWrapper span.arrowUp:after {
+  border-bottom-color: #fff !important;
+}
+.dark .flatpickr-time .numInputWrapper span.arrowDown:after {
+  border-top-color: #fff !important;
+}
+.dark .flatpickr-time input {
+  background: transparent !important;
+}

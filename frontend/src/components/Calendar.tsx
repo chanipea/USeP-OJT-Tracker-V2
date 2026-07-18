@@ -99,12 +99,12 @@ export default function Calendar({ logs, onClose }: Props) {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-[2.5rem] p-6 md:p-10 border border-[#f0ebe1] shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative"
+        className="bg-white dark:bg-zinc-900 rounded-[2.5rem] p-6 md:p-10 border border-[#f0ebe1] dark:border-zinc-800 shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#f8f6f5] hover:bg-gray-200 text-gray-600 flex items-center justify-center transition-colors z-10"
+          className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#f8f6f5] dark:bg-zinc-800 hover:bg-gray-200 text-gray-600 dark:text-gray-300 flex items-center justify-center transition-colors z-10"
           aria-label="Close calendar"
         >
           <X size={20} />
@@ -112,29 +112,29 @@ export default function Calendar({ logs, onClose }: Props) {
 
         <div className="flex items-center justify-between mb-8 flex-wrap gap-4 pr-14">
           <div className="flex items-center gap-3">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#f8f6f5] border border-[#f0ebe1]">
-              <CalendarDays size={14} className="text-[#7a0016]" />
-              <span className="text-xs font-bold uppercase tracking-widest text-gray-600">Monthly Overview</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#f8f6f5] dark:bg-zinc-800 border border-[#f0ebe1] dark:border-zinc-800">
+              <CalendarDays size={14} className="text-[#7a0016] dark:text-[#fca5a5]" />
+              <span className="text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-300">Monthly Overview</span>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={goToPrevMonth}
-              className="w-9 h-9 rounded-full bg-[#f8f6f5] hover:bg-gray-200 text-gray-600 flex items-center justify-center transition-colors"
+              className="w-9 h-9 rounded-full bg-[#f8f6f5] dark:bg-zinc-800 hover:bg-gray-200 text-gray-600 dark:text-gray-300 flex items-center justify-center transition-colors"
               aria-label="Previous month"
             >
               <ChevronLeft size={18} />
             </button>
             <button
               onClick={goToToday}
-              className="px-4 py-2 rounded-full bg-[#f8f6f5] hover:bg-gray-200 text-xs font-bold uppercase tracking-widest text-gray-600 transition-colors"
+              className="px-4 py-2 rounded-full bg-[#f8f6f5] dark:bg-zinc-800 hover:bg-gray-200 text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-300 transition-colors"
             >
               Today
             </button>
             <button
               onClick={goToNextMonth}
-              className="w-9 h-9 rounded-full bg-[#f8f6f5] hover:bg-gray-200 text-gray-600 flex items-center justify-center transition-colors"
+              className="w-9 h-9 rounded-full bg-[#f8f6f5] dark:bg-zinc-800 hover:bg-gray-200 text-gray-600 dark:text-gray-300 flex items-center justify-center transition-colors"
               aria-label="Next month"
             >
               <ChevronRight size={18} />
@@ -142,7 +142,7 @@ export default function Calendar({ logs, onClose }: Props) {
           </div>
         </div>
 
-        <h3 className="text-2xl font-semibold tracking-tighter text-[#1a0107] mb-6">
+        <h3 className="text-2xl font-semibold tracking-tighter text-[#1a0107] dark:text-white mb-6">
           {new Date(viewYear, viewMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}
         </h3>
 
@@ -171,15 +171,15 @@ export default function Calendar({ logs, onClose }: Props) {
               'relative group aspect-square rounded-xl sm:rounded-2xl flex items-center justify-center text-xs sm:text-sm font-semibold transition-all cursor-default ';
 
             if (hasLog) {
-              cellClass += 'bg-[#fdb813] text-[#2a020b] shadow-sm ';
+              cellClass += 'bg-[#fdb813] text-[#2a020b] dark:text-white shadow-sm ';
             } else if (isPast) {
-              cellClass += 'bg-[#f8f6f5] text-gray-400 ';
+              cellClass += 'bg-[#f8f6f5] dark:bg-zinc-800 text-gray-400 ';
             } else {
-              cellClass += 'bg-white border border-gray-100 text-gray-400 ';
+              cellClass += 'bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 text-gray-400 ';
             }
 
             if (isToday) {
-              cellClass += 'ring-2 ring-[#1a0107] ring-offset-1 ';
+              cellClass += 'ring-2 ring-[#1a0107] dark:ring-white ring-offset-1 dark:ring-offset-zinc-900 ';
             }
 
             const column = i % 7;
@@ -201,7 +201,7 @@ export default function Calendar({ logs, onClose }: Props) {
 
                 {/* Tooltip */}
                 <div className={`pointer-events-none absolute bottom-full ${tooltipPosClass} mb-2 w-max max-w-[13rem] opacity-0 group-hover:opacity-100 transition-opacity z-30`}>
-                  <div className="bg-[#1a0107] text-white text-xs rounded-2xl px-4 py-3 shadow-xl">
+                  <div className="bg-[#1a0107] text-white dark:bg-zinc-800 text-xs rounded-2xl px-4 py-3 shadow-xl">
                     <p className="font-bold mb-1">
                       {date.toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric' })}
                       {isToday && <span className="text-[#fdb813]"> &middot; Today</span>}
@@ -229,22 +229,22 @@ export default function Calendar({ logs, onClose }: Props) {
         </div>
 
         {/* Legend */}
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-8 pt-6 border-t border-gray-100">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-3 mt-8 pt-6 border-t border-gray-100 dark:border-zinc-800">
           <div className="flex items-center gap-2">
             <span className="w-4 h-4 rounded-md bg-[#fdb813] shrink-0"></span>
-            <span className="text-xs font-medium text-gray-500">Duty logged</span>
+            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Duty logged</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-4 h-4 rounded-md bg-[#f8f6f5] border border-gray-200 shrink-0"></span>
-            <span className="text-xs font-medium text-gray-500">No duty</span>
+            <span className="w-4 h-4 rounded-md bg-[#f8f6f5] dark:bg-zinc-800 border border-gray-200 dark:border-zinc-600 shrink-0"></span>
+            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">No duty</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-4 h-4 rounded-md bg-white border border-gray-100 shrink-0"></span>
-            <span className="text-xs font-medium text-gray-500">Upcoming</span>
+            <span className="w-4 h-4 rounded-md bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-700 shrink-0"></span>
+            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Upcoming</span>
           </div>
           <div className="flex items-center gap-2">
-            <span className="w-4 h-4 rounded-md bg-white ring-2 ring-[#1a0107] shrink-0"></span>
-            <span className="text-xs font-medium text-gray-500">Today</span>
+            <span className="w-4 h-4 rounded-md bg-white dark:bg-zinc-900 ring-2 ring-[#1a0107] dark:ring-white shrink-0"></span>
+            <span className="text-xs font-medium text-gray-500 dark:text-gray-400">Today</span>
           </div>
         </div>
       </div>

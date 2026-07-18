@@ -62,10 +62,10 @@ export default function ImageCropperModal({ src, aspect, onComplete, onCancel }:
 
   return (
     <div className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#1a0107]/80 backdrop-blur-md px-4">
-      <div className="bg-white rounded-[3rem] p-8 md:p-10 w-full max-w-xl shadow-2xl border border-[#f0ebe1]">
+      <div className="bg-white dark:bg-zinc-900 rounded-[3rem] p-8 md:p-10 w-full max-w-xl shadow-2xl border border-[#f0ebe1] dark:border-zinc-800">
         <div className="flex justify-between items-center mb-8">
-          <h3 className="text-3xl font-semibold tracking-tighter text-[#1a0107] flex items-center gap-3">
-            <Crop size={24} className="text-[#7a0016]" /> Adjust Framing
+          <h3 className="text-3xl font-semibold tracking-tighter text-[#1a0107] dark:text-white flex items-center gap-3">
+            <Crop size={24} className="text-[#7a0016] dark:text-[#fca5a5]" /> Adjust Framing
           </h3>
           <button onClick={onCancel} className="text-gray-400 hover:text-gray-600 transition-colors p-2">
             <X size={24} />
@@ -74,7 +74,7 @@ export default function ImageCropperModal({ src, aspect, onComplete, onCancel }:
 
         <div
           ref={containerRef}
-          className="w-full relative overflow-hidden rounded-[2rem] bg-[#f8f6f5] shadow-inner touch-none"
+          className="w-full relative overflow-hidden rounded-[2rem] bg-[#f8f6f5] dark:bg-zinc-800 shadow-inner touch-none border border-transparent dark:border-zinc-700"
           style={{ aspectRatio: aspect, cursor: isDragging ? 'grabbing' : 'grab' }}
           onMouseDown={(e) => handlePointerDown(e.clientX, e.clientY)}
           onMouseMove={(e) => handlePointerMove(e.clientX, e.clientY)}
@@ -118,7 +118,7 @@ export default function ImageCropperModal({ src, aspect, onComplete, onCancel }:
             step="0.05"
             value={zoom}
             onChange={(e) => setZoom(parseFloat(e.target.value))}
-            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#1a0107]"
+            className="w-full h-2 bg-gray-200 dark:bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-[#1a0107] dark:accent-white"
           />
         </div>
 
@@ -126,14 +126,14 @@ export default function ImageCropperModal({ src, aspect, onComplete, onCancel }:
           <button
             type="button"
             onClick={onCancel}
-            className="flex-1 py-4 rounded-full font-semibold text-gray-600 bg-[#f8f6f5] hover:bg-gray-200 transition-colors text-lg"
+            className="flex-1 py-4 rounded-full font-semibold text-gray-600 dark:text-zinc-300 bg-[#f8f6f5] dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors text-lg"
           >
             Cancel
           </button>
           <button
             type="button"
             onClick={handleCrop}
-            className="flex-1 py-4 rounded-full font-semibold text-white bg-[#1a0107] hover:bg-[#3a0310] transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 text-lg"
+            className="flex-1 py-4 rounded-full font-semibold text-white bg-[#1a0107] dark:bg-white dark:text-[#1a0107] hover:bg-[#4a0414] dark:hover:bg-gray-200 transition-all shadow-lg hover:shadow-xl hover:-translate-y-1 text-lg"
           >
             Confirm & Apply
           </button>

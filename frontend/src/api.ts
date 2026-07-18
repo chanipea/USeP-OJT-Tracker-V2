@@ -65,3 +65,16 @@ export function saveProfile(profileData: Profile): Promise<Profile> {
     body: JSON.stringify(profileData),
   });
 }
+
+// ----- Backup & Restore --------------------------------------
+
+export function downloadBackup() {
+  window.location.href = `${BASE_URL}/backup`;
+}
+
+export function restoreBackup(backupData: { profile: Profile, logs: LogEntry[] }): Promise<{ success: boolean }> {
+  return request<{ success: boolean }>(`${BASE_URL}/restore`, {
+    method: 'POST',
+    body: JSON.stringify(backupData),
+  });
+}
