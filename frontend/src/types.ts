@@ -12,7 +12,7 @@ export type CategoryId =
   | 'Research'
   | 'Observation';
 
-export type TabId = 'dashboard' | 'add' | 'history' | 'profile';
+export type TabId = 'dashboard' | 'history' | 'profile';
 
 export interface LogEntry {
   id: number;

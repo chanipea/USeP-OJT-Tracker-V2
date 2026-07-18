@@ -40,6 +40,7 @@ export default function App() {
 
   const [logFormData, setLogFormData] = useState<LogFormData>(defaultLogData());
   const [editingLogId, setEditingLogId] = useState<number | null>(null);
+  const [isAddLogModalOpen, setIsAddLogModalOpen] = useState(false);
 
   const notify = useCallback((message: string, type: 'success' | 'error' = 'success') => {
     setNotification({ message, type });
@@ -109,7 +110,7 @@ export default function App() {
   const goToAddLog = (logToEdit: LogEntry | null = null) => {
     setLogFormData(logToEdit ? { ...logToEdit } : defaultLogData());
     setEditingLogId(logToEdit ? logToEdit.id : null);
-    setActiveTab('add');
+    setIsAddLogModalOpen(true);
   };
 
   const totalHoursCompleted = logs.reduce((total, log) => total + Number(log.hours || 0), 0);
@@ -131,24 +132,28 @@ export default function App() {
 
         {!loadingData && activeTab === 'dashboard' && <Dashboard profile={profile} logs={logs} />}
 
-        {!loadingData && activeTab === 'add' && (
-          <AddLogForm
-            logFormData={logFormData}
-            setLogFormData={setLogFormData}
-            editingLogId={editingLogId}
-            notify={notify}
-            onCancel={() => {
-              setEditingLogId(null);
-              setLogFormData(defaultLogData());
-              setActiveTab('history');
-            }}
-            onSaved={async () => {
-              await reloadLogs();
-              setLogFormData(defaultLogData());
-              setEditingLogId(null);
-              setActiveTab('history');
-            }}
-          />
+        {!loadingData && isAddLogModalOpen && (
+          <div className="fixed inset-0 z-[100] flex justify-center items-center overflow-y-auto bg-black/50 backdrop-blur-sm p-4 sm:p-6 animate-in fade-in duration-200">
+            <div className="relative w-full max-w-5xl my-auto animate-in zoom-in-95 duration-200">
+              <AddLogForm
+                logFormData={logFormData}
+                setLogFormData={setLogFormData}
+                editingLogId={editingLogId}
+                notify={notify}
+                onCancel={() => {
+                  setEditingLogId(null);
+                  setLogFormData(defaultLogData());
+                  setIsAddLogModalOpen(false);
+                }}
+                onSaved={async () => {
+                  await reloadLogs();
+                  setLogFormData(defaultLogData());
+                  setEditingLogId(null);
+                  setIsAddLogModalOpen(false);
+                }}
+              />
+            </div>
+          </div>
         )}
 
         {!loadingData && activeTab === 'history' && (

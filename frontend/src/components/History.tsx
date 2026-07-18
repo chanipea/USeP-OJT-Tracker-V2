@@ -36,6 +36,8 @@ const MOOD_BADGE_CLASS: Record<string, string> = {
 export default function History({ logs, profile, totalHoursCompleted, notify, onEdit, onDeleted, onAddClick }: Props) {
   const [deleteConfirmId, setDeleteConfirmId] = useState<number | null>(null);
   const [lightbox, setLightbox] = useState<LightboxState | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const ITEMS_PER_PAGE = 3;
 
   const confirmDelete = async () => {
     if (deleteConfirmId === null) return;
@@ -62,13 +64,16 @@ export default function History({ logs, profile, totalHoursCompleted, notify, on
     notify('Excel exported successfully!');
   };
 
+  const totalPages = Math.ceil(sorted.length / ITEMS_PER_PAGE);
+  const paginatedLogs = sorted.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE);
+
   return (
-    <div className="max-w-6xl mx-auto animate-in fade-in duration-700 pb-12 relative">
+    <div className="max-w-7xl mx-auto animate-in fade-in duration-700 pb-12 pt-6 px-4 relative">
       {/* Confirm Deletion Modal */}
       {deleteConfirmId !== null && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[#1a0107]/40 backdrop-blur-sm px-4">
           <div className="bg-white dark:bg-zinc-900 rounded-[2.5rem] p-8 md:p-10 max-w-sm w-full shadow-2xl border border-[#f0ebe1] dark:border-zinc-800">
-            <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mb-6 mx-auto">
+            <div className="w-16 h-16 bg-red-50 dark:bg-red-500/10 rounded-full flex items-center justify-center mb-6 mx-auto">
               <AlertCircle size={28} className="text-red-500" />
             </div>
             <h3 className="text-2xl font-semibold tracking-tighter text-[#1a0107] dark:text-white mb-2 text-center">
@@ -80,7 +85,7 @@ export default function History({ logs, profile, totalHoursCompleted, notify, on
             <div className="flex gap-4">
               <button
                 onClick={() => setDeleteConfirmId(null)}
-                className="flex-1 py-4 rounded-full font-semibold text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 transition-colors"
+                className="flex-1 py-4 rounded-full font-semibold text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-zinc-800 hover:bg-gray-200 dark:hover:bg-zinc-700 transition-colors"
               >
                 Cancel
               </button>
@@ -95,161 +100,155 @@ export default function History({ logs, profile, totalHoursCompleted, notify, on
         </div>
       )}
 
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 mt-8 gap-6 px-4">
-        <div>
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#f8f6f5] dark:bg-zinc-800 border border-[#f0ebe1] dark:border-zinc-800 mb-6">
+      {/* 1. Bento Header (Command Center) */}
+      <div className="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6 mb-8">
+        <div className="md:col-span-4 xl:col-span-4 bg-white dark:bg-zinc-900 rounded-[2.5rem] p-8 md:p-10 border border-[#f0ebe1] dark:border-zinc-800 shadow-sm flex flex-col justify-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#f8f6f5] dark:bg-zinc-800 border border-[#f0ebe1] dark:border-zinc-800 mb-6 w-fit">
             <List size={14} className="text-[#7a0016] dark:text-[#fca5a5]" />
             <span className="text-xs font-bold uppercase tracking-widest text-gray-600 dark:text-gray-300">Transparent Ledger</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-semibold tracking-tighter text-[#1a0107] dark:text-white mb-4">
             Transaction History
           </h2>
-          <p className="text-gray-500 dark:text-gray-400 text-lg font-light max-w-xl leading-relaxed">
+          <p className="text-gray-500 dark:text-gray-400 text-lg font-light leading-relaxed max-w-xl">
             A complete, transparent ledger of all your deployed hours, categories, and moods.
           </p>
         </div>
-        <div className="flex flex-col gap-4 items-end">
-          <div className="bg-white dark:bg-zinc-900 px-8 py-5 rounded-[2rem] flex flex-col items-end border border-[#f0ebe1] dark:border-zinc-800 shadow-sm">
-            <span className="text-xs text-gray-400 uppercase font-bold tracking-widest mb-1">
-              Total Accumulated Yield
-            </span>
-            <span className="text-4xl font-semibold tracking-tighter text-[#7a0016] dark:text-[#fca5a5]">
-              {totalHoursCompleted.toFixed(1)} <span className="text-lg text-gray-400 tracking-normal">hrs</span>
-            </span>
+
+        <div className="md:col-span-2 xl:col-span-2 flex flex-col gap-4 md:gap-6">
+          <div className="flex-1 bg-[#1a0107] dark:bg-zinc-800 rounded-[2.5rem] p-8 border border-[#2a020b] dark:border-zinc-700 shadow-lg flex flex-col justify-center relative overflow-hidden group">
+            <div className="absolute -right-10 -top-10 text-[#fdb813]/10 group-hover:text-[#fdb813]/20 transition-colors">
+               <BookOpen size={120} strokeWidth={1} />
+            </div>
+            <div className="relative z-10">
+              <span className="text-xs text-gray-400 uppercase font-bold tracking-widest mb-2 block">Total Accumulated Yield</span>
+              <span className="text-5xl font-semibold tracking-tighter text-[#fdb813]">
+                {totalHoursCompleted.toFixed(1)} <span className="text-2xl text-white tracking-normal">hrs</span>
+              </span>
+            </div>
           </div>
-          <div className="flex gap-2">
-            <button
-              onClick={handleExportPDF}
-              className="bg-white dark:bg-zinc-900 hover:bg-red-50 text-[#7a0016] dark:text-[#fca5a5] border border-red-100 px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 transition-all shadow-sm"
-              title="Export as PDF"
-            >
-              <FileText size={16} /> PDF
+          <div className="grid grid-cols-2 gap-4 md:gap-6">
+            <button onClick={handleExportPDF} className="bg-white dark:bg-zinc-900 hover:bg-red-50 dark:hover:bg-[#7a0016]/20 hover:border-red-100 dark:hover:border-[#7a0016]/30 text-[#7a0016] dark:text-[#fca5a5] border border-[#f0ebe1] dark:border-zinc-800 rounded-[2rem] p-6 flex flex-col items-center justify-center gap-3 transition-all shadow-sm group">
+              <FileText size={24} className="group-hover:scale-110 transition-transform" />
+              <span className="text-xs font-bold uppercase tracking-widest text-center">Export PDF</span>
             </button>
-            <button
-              onClick={handleExportExcel}
-              className="bg-white dark:bg-zinc-900 hover:bg-green-50 text-green-700 border border-green-100 px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 transition-all shadow-sm"
-              title="Export as Excel"
-            >
-              <FileSpreadsheet size={16} /> Excel
+            <button onClick={handleExportExcel} className="bg-white dark:bg-zinc-900 hover:bg-green-50 dark:hover:bg-emerald-900/20 hover:border-green-100 dark:hover:border-emerald-800/30 text-green-700 dark:text-emerald-400 border border-[#f0ebe1] dark:border-zinc-800 rounded-[2rem] p-6 flex flex-col items-center justify-center gap-3 transition-all shadow-sm group">
+              <FileSpreadsheet size={24} className="group-hover:scale-110 transition-transform" />
+              <span className="text-xs font-bold uppercase tracking-widest text-center">Export Excel</span>
             </button>
           </div>
         </div>
       </div>
 
-      <div className="bg-white dark:bg-zinc-900 rounded-[2.5rem] md:rounded-[3rem] p-8 md:p-12 shadow-[0_8px_40px_rgb(0,0,0,0.03)] border border-[#f0ebe1] dark:border-zinc-800">
-        {sorted.length > 0 ? (
-          <div className="space-y-4">
-            {sorted.map((log) => (
-              <div
-                key={log.id}
-                className="group p-6 md:p-8 rounded-[2.5rem] hover:bg-[#f8f6f5] dark:bg-zinc-800 border border-transparent hover:border-[#f0ebe1] dark:border-zinc-800 transition-all flex flex-col md:flex-row gap-6 md:gap-10 items-start md:items-center justify-between"
-              >
-                <div className="flex-1 w-full">
-                  <div className="flex flex-wrap items-center gap-3 mb-4">
-                    <h4 className="text-xl font-semibold tracking-tight text-[#1a0107] dark:text-white mr-2">
-                      {formatDate(log.date)}
-                    </h4>
-                    <span className="text-xs bg-white dark:bg-zinc-900 text-gray-500 dark:text-gray-400 px-4 py-2 rounded-full font-bold uppercase tracking-widest border border-gray-100 dark:border-zinc-800 shadow-sm">
-                      {formatTime(log.startTime)} — {formatTime(log.endTime)}
-                    </span>
-                    {(log.moods || []).map((m) => (
-                      <span
-                        key={m}
-                        className={`text-[10px] px-3 py-2 rounded-full font-bold uppercase tracking-widest ${
-                          MOOD_BADGE_CLASS[m] || 'bg-gray-100 dark:bg-zinc-800 text-gray-500 dark:text-gray-400'
-                        }`}
-                      >
-                        {m}
-                      </span>
-                    ))}
-                  </div>
-
-                  <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-light text-base md:text-lg mb-4">
-                    {log.tasks}
-                  </p>
-
-                  {log.diary && (
-                    <div className="mb-4 p-5 bg-[#faf9f8] dark:bg-zinc-900 rounded-2xl border border-gray-100 dark:border-zinc-800">
-                      <h5 className="text-xs font-bold text-[#1a0107] dark:text-white uppercase tracking-widest mb-2">Narrative Report</h5>
-                      <p className="text-sm text-gray-600 dark:text-gray-300 font-light leading-relaxed whitespace-pre-wrap">{log.diary}</p>
-                    </div>
-                  )}
-
-                  {/* Attachments */}
-                  {log.attachments && log.attachments.length > 0 && (
-                    <div className="mt-4 border-t border-gray-100 dark:border-zinc-800 pt-4">
-                      <h5 className="text-xs font-bold text-[#1a0107] dark:text-white uppercase tracking-widest mb-3">Evidence Attached</h5>
-                      <div className="flex flex-wrap gap-4">
-                        {log.attachments.map((src, idx) => (
-                          <button 
-                            key={idx} 
-                            onClick={() => setLightbox({ logId: log.id, images: log.attachments!, currentIndex: idx })}
-                            className="block hover:opacity-80 transition-opacity"
-                          >
-                            <img src={src} alt="Attachment" className="w-24 h-24 object-cover rounded-xl shadow-sm border border-gray-200 dark:border-zinc-700" />
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex flex-wrap gap-2 mt-4">
-                    {(log.categories || []).map((c) => (
-                      <span
-                        key={c}
-                        className="text-[11px] text-gray-500 dark:text-zinc-300 font-bold uppercase tracking-wider bg-gray-100 dark:bg-zinc-800/60 border border-transparent dark:border-zinc-700/50 px-3 py-1.5 rounded-full"
-                      >
-                        {c}
-                      </span>
-                    ))}
-                  </div>
+      {/* 2. Bento Ledger Grid */}
+      {sorted.length > 0 ? (
+        <div className="space-y-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6 auto-rows-max">
+            {paginatedLogs.map((log) => (
+              <div key={log.id} className="bg-white dark:bg-zinc-900 rounded-[2.5rem] border border-[#f0ebe1] dark:border-zinc-800 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all overflow-hidden flex flex-col h-full group">
+              {/* Date & Time Header */}
+              <div className="p-6 md:p-8 border-b border-gray-100 dark:border-zinc-800 bg-[#f8f6f5] dark:bg-zinc-800/30 flex justify-between items-start">
+                <div>
+                  <h4 className="text-2xl font-semibold tracking-tight text-[#1a0107] dark:text-white mb-3">{formatDate(log.date)}</h4>
+                  <span className="text-[10px] bg-white dark:bg-zinc-800 text-gray-500 dark:text-gray-400 px-3 py-1.5 rounded-full font-bold uppercase tracking-widest border border-gray-200 dark:border-zinc-700 shadow-sm inline-block">
+                    {formatTime(log.startTime)} — {formatTime(log.endTime)}
+                  </span>
+                </div>
+                <div className="text-right shrink-0 bg-white dark:bg-zinc-800 px-4 py-3 rounded-3xl border border-gray-100 dark:border-zinc-700 shadow-sm flex flex-col items-center justify-center">
+                  <span className="block text-2xl font-semibold tracking-tighter text-[#7a0016] dark:text-[#fca5a5] leading-none mb-1">
+                    {Number(log.hours).toFixed(1)}
+                  </span>
+                  <span className="text-[9px] text-gray-400 font-bold tracking-widest uppercase">Yield</span>
+                </div>
+              </div>
+              
+              {/* Content Body */}
+              <div className="p-6 md:p-8 flex-1 flex flex-col">
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {(log.moods || []).map((m) => (
+                    <span key={m} className={`text-[10px] px-3 py-1.5 rounded-full font-bold uppercase tracking-widest border ${MOOD_BADGE_CLASS[m] || 'bg-gray-100 dark:bg-zinc-800 text-gray-500 dark:text-gray-400 border-gray-200 dark:border-zinc-700'}`}>{m}</span>
+                  ))}
+                  {(log.categories || []).map((c) => (
+                    <span key={c} className="text-[10px] px-3 py-1.5 rounded-full font-bold uppercase tracking-widest bg-gray-100 dark:bg-zinc-800 border-gray-200 dark:border-zinc-700 text-gray-600 dark:text-gray-300 border">{c}</span>
+                  ))}
                 </div>
 
-                <div className="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 pt-6 md:pt-0 border-gray-100 dark:border-zinc-800 shrink-0">
-                  <div className="text-right">
-                    <span className="block text-4xl font-semibold tracking-tighter text-[#1a0107] dark:text-white">
-                      {Number(log.hours).toFixed(1)}
-                    </span>
-                    <span className="text-xs text-gray-400 font-bold tracking-widest uppercase">Yield</span>
+                <p className="text-gray-700 dark:text-gray-300 font-medium text-lg leading-relaxed mb-6">
+                  {log.tasks}
+                </p>
+
+                {log.diary && (
+                  <div className="mb-6 p-5 bg-[#faf9f8] dark:bg-zinc-800/50 rounded-[1.5rem] border border-gray-100 dark:border-zinc-700/50">
+                    <span className="text-[10px] font-bold text-[#1a0107] dark:text-white uppercase tracking-widest mb-2 block">Narrative Report</span>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 font-light leading-relaxed whitespace-pre-wrap">{log.diary}</p>
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <button
-                      onClick={() => onEdit(log)}
-                      className="w-12 h-12 rounded-full bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 hover:bg-[#fde59b]/20 hover:border-[#fde59b] hover:text-[#d97706] text-gray-400 flex items-center justify-center transition-all shadow-sm group-hover:shadow-md"
-                      title="Edit Entry"
-                    >
-                      <Edit2 size={18} />
-                    </button>
-                    <button
-                      onClick={() => setDeleteConfirmId(log.id)}
-                      className="w-12 h-12 rounded-full bg-white dark:bg-zinc-900 border border-gray-100 dark:border-zinc-800 hover:bg-red-50 hover:border-red-100 hover:text-red-600 text-gray-400 flex items-center justify-center transition-all shadow-sm group-hover:shadow-md"
-                      title="Liquidate Entry"
-                    >
-                      <Trash2 size={18} />
-                    </button>
+                )}
+
+                {/* Attachments */}
+                {log.attachments && log.attachments.length > 0 && (
+                  <div className="mt-auto pt-6 border-t border-gray-100 dark:border-zinc-800">
+                    <span className="text-[10px] font-bold text-[#1a0107] dark:text-white uppercase tracking-widest mb-3 block">Evidence Attached</span>
+                    <div className="flex flex-wrap gap-3">
+                      {log.attachments.map((src, idx) => (
+                        <button key={idx} onClick={() => setLightbox({ logId: log.id, images: log.attachments!, currentIndex: idx })} className="block hover:opacity-80 transition-opacity hover:scale-105 transform">
+                          <img src={src} alt="Attachment" className="w-16 h-16 object-cover rounded-2xl shadow-sm border border-gray-200 dark:border-zinc-700" />
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
+              </div>
+
+              {/* Action Footer */}
+              <div className="px-6 py-5 bg-[#f8f6f5] dark:bg-zinc-900 border-t border-[#f0ebe1] dark:border-zinc-800 flex justify-end gap-3 opacity-100 xl:opacity-0 group-hover:opacity-100 transition-opacity">
+                <button onClick={() => onEdit(log)} className="w-10 h-10 rounded-full bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 hover:text-[#d97706] hover:border-[#fde59b] text-gray-400 flex items-center justify-center transition-all shadow-sm">
+                  <Edit2 size={16} />
+                </button>
+                <button onClick={() => setDeleteConfirmId(log.id)} className="w-10 h-10 rounded-full bg-white dark:bg-zinc-800 border border-gray-200 dark:border-zinc-700 hover:text-red-500 hover:border-red-200 text-gray-400 flex items-center justify-center transition-all shadow-sm">
+                  <Trash2 size={16} />
+                </button>
+              </div>
+
               </div>
             ))}
           </div>
-        ) : (
-          <div className="text-center py-24">
-            <div className="w-24 h-24 bg-[#f8f6f5] dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-8">
-              <List size={36} className="text-gray-300" />
+
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-4 mt-4">
+              <button
+                onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                disabled={currentPage === 1}
+                className="w-12 h-12 rounded-full bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 flex items-center justify-center text-[#1a0107] dark:text-white shadow-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors"
+              >
+                <ChevronLeft size={20} />
+              </button>
+              <span className="text-sm font-bold text-gray-500 dark:text-gray-400 uppercase tracking-widest">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+                disabled={currentPage === totalPages}
+                className="w-12 h-12 rounded-full bg-white dark:bg-zinc-900 border border-gray-200 dark:border-zinc-800 flex items-center justify-center text-[#1a0107] dark:text-white shadow-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 dark:hover:bg-zinc-800 transition-colors"
+              >
+                <ChevronRight size={20} />
+              </button>
             </div>
-            <h3 className="text-3xl font-semibold tracking-tight text-[#1a0107] dark:text-white mb-4">Ledger Empty</h3>
-            <p className="text-gray-500 dark:text-gray-400 text-lg font-light mb-10 max-w-md mx-auto">
-              Deploy your first hours to start tracking your capital growth.
-            </p>
-            <button
-              onClick={onAddClick}
-              className="bg-[#1a0107] hover:bg-[#4a0414] text-white px-10 py-4 rounded-full font-medium transition-all shadow-xl"
-            >
-              Log Hours Now
-            </button>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      ) : (
+        <div className="bg-white dark:bg-zinc-900 rounded-[3rem] p-16 border border-[#f0ebe1] dark:border-zinc-800 text-center shadow-sm">
+           <div className="w-24 h-24 bg-[#f8f6f5] dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-8">
+             <List size={36} className="text-gray-300 dark:text-gray-600" />
+           </div>
+           <h3 className="text-3xl font-semibold tracking-tight text-[#1a0107] dark:text-white mb-4">Ledger Empty</h3>
+           <p className="text-gray-500 dark:text-gray-400 text-lg font-light mb-10 max-w-md mx-auto">
+             Deploy your first hours to start tracking your capital growth.
+           </p>
+           <button onClick={onAddClick} className="bg-[#1a0107] dark:bg-white text-white dark:text-[#1a0107] hover:bg-[#4a0414] dark:hover:bg-gray-200 px-10 py-4 rounded-full font-semibold transition-all shadow-xl hover:-translate-y-1">
+             Log Hours Now
+           </button>
+        </div>
+      )}
 
       {/* Lightbox Modal */}
       {lightbox && (
