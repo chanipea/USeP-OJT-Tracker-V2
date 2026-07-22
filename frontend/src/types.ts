@@ -44,6 +44,7 @@ export interface Profile {
   coverPhoto: string;
   theme?: string;
   remindersEnabled?: boolean;
+  college?: string;
 }
 
 export interface NotificationState {

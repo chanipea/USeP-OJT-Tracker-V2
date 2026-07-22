@@ -42,17 +42,17 @@ export default function TopNav({ activeTab, onTabChange, onLogHoursClick }: Prop
   };
 
   return (
-    <nav className="fixed top-4 sm:top-6 left-1/2 -translate-x-1/2 w-[calc(100%-1rem)] sm:w-[calc(100%-2rem)] max-w-4xl bg-white/70 dark:bg-zinc-900/70 backdrop-blur-2xl rounded-full shadow-[0_8px_30px_rgb(0,0,0,0.04)] flex items-center justify-between p-1.5 sm:p-2 z-50 border border-white/80 dark:border-zinc-800">
+    <nav className="fixed top-0 left-0 w-full bg-[#fdfaf5] dark:bg-zinc-950 flex items-center justify-between px-4 md:px-8 xl:px-12 py-4 z-50 border-b-2 border-[#1a0107] dark:border-zinc-800 transition-colors shadow-retro-sm dark:shadow-none">
       <div
         className="flex items-center gap-2 sm:gap-3 px-2 sm:px-4 cursor-pointer group shrink-0"
         onClick={() => onTabChange('dashboard')}
       >
-        <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#2a020b] flex items-center justify-center group-hover:bg-[#7a0016] transition-colors shrink-0">
+        <div className="w-8 h-8 sm:w-9 sm:h-9 bg-[#2a020b] border-2 border-[#1a0107] flex items-center justify-center group-hover:bg-[#7a0016] transition-colors shrink-0 shadow-[2px_2px_0px_#1a0107]">
           <Sparkles size={15} className="text-[#fdb813]" />
         </div>
-        <span className="font-semibold text-lg tracking-tight hidden md:block whitespace-nowrap">
+        <span className="font-serif-fraunces font-bold text-xl tracking-tight hidden md:block whitespace-nowrap">
           <span className="text-[#7a0016] dark:text-[#fca5a5]">USeP</span>
-          <span className="text-[#1a0107] dark:text-zinc-300">Internship</span>
+          <span className="text-[#1a0107] dark:text-zinc-300 ml-1">Internship</span>
         </span>
       </div>
 
@@ -62,11 +62,11 @@ export default function TopNav({ activeTab, onTabChange, onLogHoursClick }: Prop
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
             title={tab.label}
-            className={`flex items-center gap-2 px-2.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-300 whitespace-nowrap
+            className={`flex items-center gap-2 px-3 sm:px-5 py-2 sm:py-2.5 rounded-sm text-xs sm:text-sm font-bold transition-all duration-200 whitespace-nowrap border-2
               ${
                 activeTab === tab.id
-                  ? 'bg-white dark:bg-zinc-800 text-[#1a0107] dark:text-white shadow-sm'
-                  : 'text-gray-500 dark:text-zinc-400 hover:text-[#1a0107] dark:hover:text-white hover:bg-white/50 dark:hover:bg-zinc-800/50'
+                  ? 'border-[#1a0107] dark:border-white text-[#1a0107] dark:text-white bg-[#ffc1cc] dark:bg-zinc-800 shadow-[2px_2px_0px_#1a0107] dark:shadow-none translate-y-[-2px]'
+                  : 'border-transparent text-gray-500 dark:text-zinc-400 hover:text-[#1a0107] dark:hover:text-white hover:border-[#1a0107] hover:bg-white dark:hover:bg-zinc-900'
               }`}
           >
             <tab.Icon size={16} className="shrink-0" />
@@ -85,9 +85,9 @@ export default function TopNav({ activeTab, onTabChange, onLogHoursClick }: Prop
         </button>
         <button
           onClick={onLogHoursClick}
-          className="bg-[#fdb813] text-[#2a020b] px-3 sm:px-6 py-2 sm:py-2.5 rounded-full text-xs sm:text-sm font-bold hover:bg-[#e5a610] transition-colors shadow-sm flex items-center gap-2 whitespace-nowrap"
+          className="bg-[#ffb6c1] dark:bg-white text-[#1a0107] dark:text-black border-2 border-[#1a0107] px-4 sm:px-8 py-2 sm:py-2.5 text-xs sm:text-sm font-bold hover:bg-[#ffc1cc] transition-colors flex items-center gap-2 whitespace-nowrap rounded-sm shadow-[4px_4px_0px_#1a0107] active:shadow-[0px_0px_0px_#1a0107] active:translate-x-[4px] active:translate-y-[4px]"
         >
-          <Plus size={16} className="shrink-0" /> <span className="hidden md:inline">Log Hours</span>
+          <Plus size={16} className="shrink-0" /> <span className="hidden md:inline font-serif-fraunces">Log Hours</span>
         </button>
       </div>
     </nav>

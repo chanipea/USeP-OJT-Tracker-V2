@@ -89,17 +89,19 @@ export default function Dashboard({ profile, logs }: Props) {
   }, [logs]);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 animate-in fade-in duration-700 pb-12 pt-6">
+    <div className="w-full animate-in fade-in duration-700 pb-12 pt-6">
       {isCalendarOpen && <Calendar logs={logs} onClose={() => setIsCalendarOpen(false)} />}
       
       {/* Bento Master Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 xl:grid-cols-6 gap-4 md:gap-6 auto-rows-min">
         
         {/* 1. Hero & Calendar Button (Col Span 4, Row Span 2) */}
-        <div className="md:col-span-4 xl:col-span-4 row-span-2 relative overflow-hidden rounded-[2.5rem] bg-[#fffdfb] dark:bg-zinc-900 border border-[#f0ebe1] dark:border-zinc-800 shadow-xl group hover:shadow-2xl transition-all p-8 md:p-12 flex flex-col justify-between min-h-[340px]">
-          <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-full h-[600px] bg-gradient-to-b from-[#fdb813]/20 via-[#7a0016]/10 to-transparent blur-[80px] rounded-full pointer-events-none" />
+        <div className="md:col-span-4 xl:col-span-4 row-span-2 relative overflow-hidden bg-[#ffc1cc] dark:bg-zinc-900 border-2 border-[#1a0107] dark:border-white p-8 md:p-12 flex flex-col justify-between min-h-[340px] rounded-sm group transition-transform shadow-retro">
+          <div className="absolute top-4 right-4 text-[#1a0107]/10 pointer-events-none">
+            <svg width="120" height="120" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="4" fill="none" strokeDasharray="10 10"/></svg>
+          </div>
           <div className="relative z-10 flex flex-col items-start h-full">
-            <h1 className="text-5xl md:text-6xl font-semibold tracking-tighter text-[#1a0107] dark:text-white mb-4 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-serif-fraunces tracking-tight text-[#1a0107] dark:text-white mb-4 leading-[1.1]">
               Where Your <br /> Progress Grows.
             </h1>
             <p className="text-lg text-gray-500 dark:text-gray-400 font-light max-w-lg mb-8 leading-relaxed">
@@ -108,63 +110,62 @@ export default function Dashboard({ profile, logs }: Props) {
             <div className="mt-auto w-full flex justify-end">
                <button
                  onClick={() => setIsCalendarOpen(true)}
-                 className="flex items-center gap-3 bg-white/60 dark:bg-zinc-800/80 backdrop-blur-md rounded-full px-6 py-3 border border-gray-200 dark:border-zinc-700 shadow-sm hover:scale-105 transition-all group-hover:border-[#fdb813]/50"
+                 className="flex items-center gap-3 bg-white dark:bg-zinc-800 rounded-sm px-6 py-3 border-2 border-[#1a0107] dark:border-white shadow-retro-sm hover:translate-y-1 hover:shadow-none transition-all"
                >
-                 <CalendarDays size={20} className="text-[#7a0016] dark:text-[#fca5a5]" />
-                 <span className="font-semibold text-sm">Full Calendar View</span>
+                 <CalendarDays size={20} className="text-[#1a0107] dark:text-white" />
+                 <span className="font-bold text-sm uppercase tracking-widest text-[#1a0107] dark:text-white">Full Calendar View</span>
                </button>
             </div>
           </div>
         </div>
 
         {/* 2. Core Metric Progress (Col Span 2, Row Span 2) */}
-        <div className="md:col-span-2 xl:col-span-2 row-span-2 bg-[#f8f6f5] dark:bg-zinc-800 rounded-[2.5rem] border border-[#f0ebe1] dark:border-zinc-800 shadow-lg p-8 flex flex-col justify-center items-center relative overflow-hidden group hover:shadow-xl transition-all">
-          <div className="absolute -right-20 -bottom-20 w-64 h-64 bg-gradient-to-tl from-[#7a0016]/20 to-transparent rounded-full blur-3xl group-hover:scale-125 transition-transform duration-700" />
+        <div className="md:col-span-2 xl:col-span-2 row-span-2 bg-[#d1f2eb] dark:bg-zinc-800/50 rounded-sm border-2 border-[#1a0107] dark:border-white p-8 flex flex-col justify-center items-center relative overflow-hidden group transition-transform shadow-retro">
           <div className="text-center relative z-10 mb-6">
-             <span className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2 block">Total Yield Acquired</span>
+             <span className="font-cursive-caveat text-2xl text-[#1a0107] dark:text-white mb-2 block">Total Yield Acquired</span>
              <div className="flex items-baseline justify-center gap-1">
-               <span className="text-7xl font-semibold tracking-tighter text-[#7a0016] dark:text-white">
+               <span className="text-7xl font-serif-fraunces text-[#1a0107] dark:text-white">
                  {totalHoursCompleted.toFixed(1)}
                </span>
-               <span className="text-xl text-gray-400 font-medium tracking-tight">hrs</span>
+               <span className="text-xl text-[#1a0107] font-bold tracking-tight">hrs</span>
              </div>
           </div>
           
-          <div className="w-full relative z-10 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-sm rounded-3xl p-6 border border-white/40 dark:border-zinc-700/50 shadow-sm">
-             <div className="flex justify-between items-center text-xs font-bold uppercase tracking-widest mb-3">
-               <span className="text-gray-500">Progress</span>
-               <span className="text-[#7a0016] dark:text-white">{progressPercentage.toFixed(1)}%</span>
+          <div className="w-full relative z-10 bg-white dark:bg-zinc-900 rounded-sm p-6 border-2 border-[#1a0107] dark:border-white shadow-retro-sm">
+             <div className="flex justify-between items-center text-xs font-bold uppercase tracking-widest mb-3 text-[#1a0107] dark:text-white">
+               <span>Progress</span>
+               <span>{progressPercentage.toFixed(1)}%</span>
              </div>
-             <div className="w-full bg-gray-200/80 dark:bg-zinc-800 rounded-full h-3 shadow-inner overflow-hidden">
+             <div className="w-full bg-gray-100 dark:bg-zinc-800 rounded-full h-4 border-2 border-[#1a0107] dark:border-white overflow-hidden">
                <div
-                 className="bg-[#7a0016] h-full rounded-full transition-all duration-1000 ease-out relative"
+                 className="bg-[#1a0107] dark:bg-white h-full transition-all duration-1000 ease-out relative"
                  style={{ width: `${progressPercentage}%` }}
                >
-                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent -translate-x-full animate-shimmer" />
+                 <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMSIvPgo8L3N2Zz4=')] opacity-50 mix-blend-overlay" />
                </div>
              </div>
           </div>
         </div>
 
         {/* 3. Micro Cards (Target & Remaining) */}
-        <div className="md:col-span-2 xl:col-span-1 row-span-1 bg-[#1a0107] text-white dark:bg-zinc-800 rounded-[2.5rem] p-8 border border-[#2a020b] dark:border-zinc-700 flex flex-col justify-between group hover:bg-[#2a020b] transition-colors shadow-lg">
+        <div className="md:col-span-2 xl:col-span-1 row-span-1 bg-[#1a0107] text-white dark:bg-zinc-800 rounded-sm p-8 flex flex-col justify-between group shadow-retro border-2 border-[#1a0107] dark:border-white transition-transform">
           <div className="flex justify-between items-start mb-6">
-            <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Target Config</span>
+             <span className="font-cursive-caveat text-xl text-[#fdb813]">Target Config</span>
             <Target size={20} className="text-[#fdb813]/60 group-hover:text-[#fdb813] transition-colors" />
           </div>
-          <span className="text-5xl font-semibold tracking-tighter text-[#fdb813]">{profile.targetHours}</span>
+          <span className="text-5xl font-serif-fraunces text-[#ffc1cc]">{profile.targetHours}</span>
         </div>
 
-        <div className="md:col-span-2 xl:col-span-1 row-span-1 bg-[#2a020b] text-white dark:bg-zinc-800/80 rounded-[2.5rem] p-8 border border-[#4a0414] dark:border-zinc-700 flex flex-col justify-between group hover:bg-[#4a0414] transition-colors shadow-lg">
+        <div className="md:col-span-2 xl:col-span-1 row-span-1 bg-white text-[#1a0107] dark:bg-zinc-800/80 rounded-sm p-8 flex flex-col justify-between group shadow-retro border-2 border-[#1a0107] dark:border-white transition-transform">
           <div className="flex justify-between items-start mb-6">
-            <span className="text-xs font-bold uppercase tracking-widest text-gray-400">Time Remaining</span>
-            <Clock size={20} className="text-white/60 group-hover:text-white transition-colors" />
+            <span className="font-cursive-caveat text-xl text-[#7a0016]">Time Remaining</span>
+            <Clock size={20} className="text-[#1a0107] group-hover:text-[#7a0016] transition-colors" />
           </div>
-          <span className="text-5xl font-semibold tracking-tighter">{remainingHours.toFixed(1)}</span>
+          <span className="text-5xl font-serif-fraunces text-[#1a0107]">{remainingHours.toFixed(1)}</span>
         </div>
 
         {/* 4. Weekly Strip (Col Span 4) */}
-        <div className="md:col-span-4 xl:col-span-4 row-span-1 bg-white/50 dark:bg-zinc-900/50 backdrop-blur-xl rounded-[2.5rem] border border-[#f0ebe1] dark:border-zinc-800 shadow-sm p-6 flex flex-col justify-center overflow-hidden">
+        <div className="md:col-span-4 xl:col-span-4 row-span-1 bg-[#ffb6c1] dark:bg-zinc-900/50 rounded-sm border-2 border-[#1a0107] dark:border-white shadow-retro p-6 flex flex-col justify-center overflow-hidden">
           <div className="flex justify-between items-center gap-4 overflow-x-auto hide-scrollbar px-2">
             {weekDays.map((date, i) => {
               const dateStr = date.toISOString().split('T')[0];
@@ -176,8 +177,8 @@ export default function Dashboard({ profile, logs }: Props) {
                     {date.toLocaleDateString('en-US', { weekday: 'short' })}
                   </span>
                   <div
-                    className={`w-12 h-12 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300
-                    ${hasLog ? 'bg-[#fdb813] text-[#2a020b] dark:text-[#2a020b] shadow-md border-2 border-white dark:border-zinc-700' : isToday ? 'bg-[#2a020b] text-white dark:bg-zinc-800' : 'bg-white dark:bg-zinc-800/50 border border-gray-200 dark:border-zinc-700 text-gray-500'}
+                    className={`w-12 h-12 rounded-sm flex items-center justify-center text-sm font-bold transition-all duration-300 border-2
+                    ${hasLog ? 'bg-[#fdb813] text-[#1a0107] dark:bg-zinc-100 dark:text-[#1a0107] border-[#1a0107] shadow-retro-sm' : isToday ? 'bg-white dark:bg-zinc-800 border-[#1a0107] shadow-retro-sm' : 'bg-transparent border-[#1a0107]/20 dark:border-zinc-800 text-[#1a0107]/50'}
                     `}
                   >
                     {date.getDate()}
@@ -189,12 +190,12 @@ export default function Dashboard({ profile, logs }: Props) {
         </div>
 
         {/* 5. Chart & Analytics */}
-        <div className="md:col-span-4 xl:col-span-3 row-span-2 bg-white dark:bg-zinc-900 rounded-[2.5rem] border border-[#f0ebe1] dark:border-zinc-800 shadow-sm p-8 flex flex-col min-h-[350px]">
+        <div className="md:col-span-4 xl:col-span-3 row-span-2 bg-[#d1f2eb] dark:bg-zinc-900 rounded-sm border-2 border-[#1a0107] dark:border-white shadow-retro p-8 flex flex-col min-h-[350px]">
           <div className="flex items-center justify-between mb-8">
-            <span className="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 flex items-center gap-2">
-              <TrendingUp size={14} className="text-[#7a0016] dark:text-[#fca5a5]" /> Velocity Over Time
+            <span className="font-cursive-caveat text-2xl text-[#1a0107] flex items-center gap-2">
+               Velocity Over Time
             </span>
-            <span className="text-xs font-medium bg-[#f8f6f5] dark:bg-zinc-800 px-4 py-1.5 rounded-full text-gray-600 dark:text-gray-300">Last 7 Days</span>
+            <span className="text-xs font-bold bg-white dark:bg-zinc-800 px-4 py-1.5 rounded-sm border-2 border-[#1a0107] shadow-retro-sm text-[#1a0107] dark:text-gray-300">Last 7 Days</span>
           </div>
           <div className="flex-1 w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -209,14 +210,14 @@ export default function Dashboard({ profile, logs }: Props) {
           </div>
         </div>
 
-        <div className="md:col-span-4 xl:col-span-3 row-span-2 bg-[#f8f6f5] dark:bg-zinc-800/50 rounded-[2.5rem] border border-[#f0ebe1] dark:border-zinc-800 shadow-sm p-8 flex flex-col justify-between min-h-[350px]">
+        <div className="md:col-span-4 xl:col-span-3 row-span-2 bg-[#fdfaf5] dark:bg-zinc-800/50 rounded-sm border-2 border-[#1a0107] dark:border-white shadow-retro p-8 flex flex-col justify-between min-h-[350px]">
            <div className="flex items-center justify-between mb-8">
-            <span className="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 flex items-center gap-2">
-              <Activity size={14} className="text-[#fdb813]" /> Skill Allocation
+            <span className="font-cursive-caveat text-2xl text-[#1a0107] flex items-center gap-2">
+               Skill Allocation
             </span>
-            <div className="flex bg-white dark:bg-zinc-800 p-1 rounded-full border border-gray-200 dark:border-zinc-700 shadow-sm">
+            <div className="flex bg-white dark:bg-zinc-800 p-1 rounded-sm border-2 border-[#1a0107] dark:border-zinc-700 shadow-retro-sm">
                {['all', 'month', 'week'].map((t) => (
-                 <button key={t} onClick={() => setTimeFilter(t as any)} className={`px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all ${timeFilter === t ? 'bg-[#1a0107] dark:bg-zinc-600 text-white shadow-sm' : 'text-gray-500 dark:text-gray-400 hover:text-[#1a0107] dark:hover:text-white'}`}>
+                 <button key={t} onClick={() => setTimeFilter(t as any)} className={`px-4 py-1.5 rounded-sm text-[10px] font-bold uppercase tracking-widest transition-all ${timeFilter === t ? 'bg-[#ffc1cc] dark:bg-zinc-600 text-[#1a0107] border-2 border-[#1a0107]' : 'text-gray-500 dark:text-gray-400 hover:text-[#1a0107] dark:hover:text-white border-2 border-transparent'}`}>
                    {t}
                  </button>
                ))}
@@ -229,8 +230,8 @@ export default function Dashboard({ profile, logs }: Props) {
                    <span className="text-[#1a0107] dark:text-white">{cat.label}</span>
                    <span className="text-gray-500 dark:text-gray-400">{categoryStats[cat.label] || 0}%</span>
                  </div>
-                 <div className="w-full bg-gray-200/60 dark:bg-zinc-700/50 rounded-full h-3 shadow-inner overflow-hidden">
-                   <div className={`${cat.color} h-full rounded-full transition-all duration-1000 ease-out`} style={{ width: `${categoryStats[cat.label] || 0}%` }} />
+                 <div className="w-full bg-[#1a0107] rounded-sm h-4 overflow-hidden border-2 border-[#1a0107]">
+                   <div className={`${cat.color} h-full transition-all duration-1000 ease-out border-r-2 border-[#1a0107]`} style={{ width: `${categoryStats[cat.label] || 0}%` }} />
                  </div>
                </div>
              ))}
@@ -238,15 +239,15 @@ export default function Dashboard({ profile, logs }: Props) {
         </div>
 
         {/* 6. Milestones Gallery (Col Span 6) */}
-        <div className="md:col-span-4 xl:col-span-6 bg-gradient-to-br from-white to-[#faf9f8] dark:from-zinc-900 dark:to-zinc-900/90 rounded-[2.5rem] border border-[#f0ebe1] dark:border-zinc-800 shadow-sm p-8 mt-2 lg:mb-0 mb-8">
+        <div className="md:col-span-4 xl:col-span-6 bg-white dark:bg-zinc-900/80 rounded-sm border-2 border-[#1a0107] dark:border-zinc-800 shadow-retro p-8 mt-2 lg:mb-0 mb-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-full bg-[#fdb813]/20 flex items-center justify-center">
                 <Award size={24} className="text-[#fdb813]" />
               </div>
-              <h3 className="text-2xl font-semibold tracking-tighter text-[#1a0107] dark:text-white">Milestones & Achievements</h3>
+              <h3 className="text-4xl font-serif-fraunces tracking-tight text-[#1a0107] dark:text-white">Milestones & Achievements</h3>
             </div>
-            <div className="flex items-center gap-3 bg-white dark:bg-zinc-800 px-5 py-2.5 rounded-full border border-gray-100 dark:border-zinc-700 shadow-sm">
+            <div className="flex items-center gap-3 bg-[#fdfaf5] dark:bg-zinc-800 px-5 py-2.5 rounded-sm border-2 border-[#1a0107] dark:border-zinc-700 shadow-retro-sm">
                <span className="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400">Current Day Streak</span>
                <div className="flex items-center gap-1.5 text-[#fdb813]">
                  <Flame size={16} className="fill-current" />
@@ -260,8 +261,8 @@ export default function Dashboard({ profile, logs }: Props) {
               const Icon = badge.icon;
               return (
                 <div key={badge.id} className="relative group">
-                  <div className={`flex items-center gap-4 py-3 px-6 rounded-full border transition-all ${isUnlocked ? 'bg-white dark:bg-zinc-800 border-gray-200 dark:border-zinc-700 shadow-sm hover:scale-105 hover:shadow-md cursor-help' : 'bg-transparent border-dashed border-gray-200 dark:border-zinc-800 opacity-50 grayscale cursor-not-allowed'}`}>
-                    <div className={`w-10 h-10 rounded-full flex items-center justify-center border ${isUnlocked ? badge.color : 'border-gray-300 dark:border-zinc-700 text-gray-400'}`}>
+                  <div className={`flex items-center gap-4 py-3 px-6 rounded-sm border-2 transition-all ${isUnlocked ? 'bg-[#ffb6c1] dark:bg-zinc-800 border-[#1a0107] dark:border-zinc-700 shadow-retro-sm cursor-help hover:-translate-y-[2px]' : 'bg-transparent border-dashed border-[#1a0107]/30 dark:border-zinc-800 opacity-50 grayscale cursor-not-allowed'}`}>
+                    <div className={`w-10 h-10 rounded-sm flex items-center justify-center border-2 ${isUnlocked ? 'border-[#1a0107] bg-white text-[#1a0107]' : 'border-[#1a0107]/30 dark:border-zinc-700 text-[#1a0107]/30'}`}>
                       <Icon size={18} />
                     </div>
                     <div>

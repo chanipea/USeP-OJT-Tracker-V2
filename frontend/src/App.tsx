@@ -116,14 +116,14 @@ export default function App() {
   const totalHoursCompleted = logs.reduce((total, log) => total + Number(log.hours || 0), 0);
 
   return (
-    <div className="min-h-screen bg-[#faf9f8] dark:bg-zinc-950 transition-colors duration-300 font-sans selection:bg-[#fdb813] selection:text-[#1a0107] dark:text-white">
+    <div className="min-h-screen bg-[#fdfaf5] dark:bg-zinc-950 bg-grid-paper transition-colors duration-300 font-sans selection:bg-[#fca5a5] selection:text-[#1a0107] dark:text-white">
       <TopNav
         activeTab={activeTab}
         onTabChange={setActiveTab}
         onLogHoursClick={() => goToAddLog(null)}
       />
 
-      <main className="w-full px-4 pt-32 pb-24 relative overflow-hidden">
+      <main className="w-full max-w-[1920px] mx-auto px-4 md:px-8 xl:px-12 pt-32 pb-24 relative overflow-hidden">
         <NotificationToast notification={notification} />
 
         {loadingData && (

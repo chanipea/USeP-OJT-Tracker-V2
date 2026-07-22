@@ -69,6 +69,9 @@ try {
 try {
   db.exec("ALTER TABLE profile ADD COLUMN reminders_enabled INTEGER DEFAULT 0");
 } catch (e) {}
+try {
+  db.exec("ALTER TABLE profile ADD COLUMN college TEXT");
+} catch (e) {}
 
 // Populate tasks from task_description if empty
 try {

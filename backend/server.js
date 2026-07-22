@@ -44,21 +44,22 @@ app.get('/api/profile', (req, res) => {
     coverPhoto: profileRow.cover_photo,
     theme: profileRow.theme || 'maroon',
     remindersEnabled: Boolean(profileRow.reminders_enabled),
+    college: profileRow.college,
   });
 });
 
 app.post('/api/profile', (req, res) => {
-  const { name, studentId, program, company, supervisor, targetHours, bio, email, phone, profilePicture, coverPhoto, theme, remindersEnabled } = req.body;
+  const { name, studentId, program, company, supervisor, targetHours, bio, email, phone, profilePicture, coverPhoto, theme, remindersEnabled, college } = req.body;
   
   db.prepare(`
     UPDATE profile SET 
       name = ?, student_id = ?, program = ?, company = ?, supervisor = ?, 
       target_hours = ?, bio = ?, email = ?, phone = ?, profile_picture = ?, cover_photo = ?,
-      theme = ?, reminders_enabled = ?
+      theme = ?, reminders_enabled = ?, college = ?
     WHERE user_id = ?
   `).run(
     name, studentId, program, company, supervisor, targetHours, bio, email, phone, profilePicture, coverPhoto, 
-    theme || 'maroon', remindersEnabled ? 1 : 0, DEFAULT_USER_ID
+    theme || 'maroon', remindersEnabled ? 1 : 0, college, DEFAULT_USER_ID
   );
 
   const profileRow = db.prepare('SELECT * FROM profile WHERE user_id = ?').get(DEFAULT_USER_ID);
@@ -76,6 +77,7 @@ app.post('/api/profile', (req, res) => {
     coverPhoto: profileRow.cover_photo,
     theme: profileRow.theme || 'maroon',
     remindersEnabled: Boolean(profileRow.reminders_enabled),
+    college: profileRow.college,
   });
 });
 
